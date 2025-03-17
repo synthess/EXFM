@@ -310,6 +310,15 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            // 모든 input 요소에 enter key 이벤트 적용
+            $("input, select").on("keydown", function(event) {
+                if (event.key === "Enter") {
+                    applyFilters(); // Enter 키가 눌리면 필터 함수 실행
+                }
+            });
+        });
+
         // 예시 데이터 (실제 데이터로 대체 가능)
         const data = [
                         {id:156772,name:'Toni Kroos',koreanName:'토니 크로스',ability:154,potential:176,nationality:'독일',position:'DM/M C',role:'player'},
