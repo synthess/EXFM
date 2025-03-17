@@ -174,7 +174,7 @@
             </div>
 
             <div>
-                <label for="nation">국적</label>
+                <label for="nationalitySearch">국적</label>
                 <select id="nationalitySearch">
                     <option value=''>전체</option>
                     <option value='가나'>가나</option>
@@ -271,6 +271,18 @@
                     <option value='프랑스'>프랑스</option>
                     <option value='핀란드'>핀란드</option>
                     <option value='헝가리'>헝가리</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="postionSearch">포지션</label>
+                <select id="postionSearch">
+                    <option value="D">D</option>
+                    <option value="WB">WB</option>
+                    <option value="DM">DM</option>
+                    <option value="M">M</option>
+                    <option value="AM">AM</option>
+                    <option value="S">S</option>
                 </select>
             </div>
 
@@ -2171,6 +2183,7 @@
             var potentialMin = $("#potentialMin").val(); // 최소 포텐
             var potentialMax = $("#potentialMax").val(); // 최대 포텐
             var nationality = $("#nationalitySearch").val(); // 선택된 국적
+            var position = $("#postionSearch").val(); // 선택된 포지션
 
             // 필터링된 데이터
             var filteredData = data.filter(player => {
@@ -2190,6 +2203,9 @@
 
                 // 국적 필터링
                 if (nationality && player.nationality !== nationality) return false;
+
+                // 포지션 필터링
+                if (position && !player.position.includes(position)) return false;
 
                 return true;
             });
