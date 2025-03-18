@@ -330,7 +330,7 @@
             if (potentialMax && coach.potential > potentialMax) return false;
 
             // 국적 필터링
-            if (nationality && coach.nationality !== nationality) return false;
+            if (nationality && coach.national !== nationality) return false;
 
             // 전술 스타일 필터링
             if (tactic && coach.style !== tactic) return false;
