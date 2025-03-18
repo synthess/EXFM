@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXFM 선수 검색기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 기본적인 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 전체 컨테이너 */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 헤더 스타일 */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: #333;
+        }
+
+        /* 필터 박스 스타일 */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filters div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 200px; /* 각 항목의 넓이 설정 */
+        }
+
+        .filters label {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .filters input, .filters select {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .filters button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-grow: 1; /* 버튼이 공간을 채우도록 설정 */
+        }
+
+        .filters button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filters div {
+                width: 100%;
+            }
+
+            .filters button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>선수 검색</h1>
+        </header>
+
+        <!-- 필터 입력 폼 -->
+        <div class="filters">
+            <div>
+                <label for="name">이름 검색</label>
+                <input type="text" id="nameSearch" placeholder="이름을 입력하세요">
+            </div>
+    
+            <div>
+                <label for="abilityMin">어빌 최소값</label>
+                <input type="number" id="abilityMin" min="0" placeholder="최소 어빌">
+            </div>
+            
+            <div>
+                <label for="abilityMax">어빌 최대값</label>
+                <input type="number" id="abilityMax" min="0" placeholder="최대 어빌">
+            </div>
+    
+            <div>
+                <label for="potentialMin">포텐 최소값</label>
+                <input type="number" id="potentialMin" min="0" placeholder="최소 포텐">
+            </div>
+    
+            <div>
+                <label for="potentialMax">포텐 최대값</label>
+                <input type="number" id="potentialMax" min="0" placeholder="최대 포텐">
+            </div>
+
+            <div>
+                <label for="nationalitySearch">국적</label>
+                <select id="nationalitySearch">
+                    <option value=''>전체</option>
+                    <option value='가나'>가나</option>
+                    <option value='가봉'>가봉</option>
+                    <option value='감비아'>감비아</option>
+                    <option value='그리스'>그리스</option>
+                    <option value='기니'>기니</option>
+                    <option value='기니 비사우'>기니 비사우</option>
+                    <option value='나미비아'>나미비아</option>
+                    <option value='나이지리아'>나이지리아</option>
+                    <option value='남아프리카공화국'>남아프리카공화국</option>
+                    <option value='네덜란드'>네덜란드</option>
+                    <option value='노르웨이'>노르웨이</option>
+                    <option value='대한민국'>대한민국</option>
+                    <option value='덴마크'>덴마크</option>
+                    <option value='독일'>독일</option>
+                    <option value='라이베리아'>라이베리아</option>
+                    <option value='러시아'>러시아</option>
+                    <option value='루마니아'>루마니아</option>
+                    <option value='룩셈부르크'>룩셈부르크</option>
+                    <option value='리비아'>리비아</option>
+                    <option value='말리'>말리</option>
+                    <option value='멕시코'>멕시코</option>
+                    <option value='모로코'>모로코</option>
+                    <option value='모잠비크'>모잠비크</option>
+                    <option value='몬테네그로'>몬테네그로</option>
+                    <option value='몰타'>몰타</option>
+                    <option value='미국'>미국</option>
+                    <option value='베네수엘라'>베네수엘라</option>
+                    <option value='벨기에'>벨기에</option>
+                    <option value='보스니아 헤르체고비나'>보스니아 헤르체고비나</option>
+                    <option value='부룬디'>부룬디</option>
+                    <option value='부르키나파소'>부르키나파소</option>
+                    <option value='북마케도니아'>북마케도니아</option>
+                    <option value='북아일랜드'>북아일랜드</option>
+                    <option value='불가리아'>불가리아</option>
+                    <option value='브라질'>브라질</option>
+                    <option value='사우디 아라비아'>사우디 아라비아</option>
+                    <option value='세네갈'>세네갈</option>
+                    <option value='세르비아'>세르비아</option>
+                    <option value='수리남'>수리남</option>
+                    <option value='스웨덴'>스웨덴</option>
+                    <option value='스위스'>스위스</option>
+                    <option value='스코틀랜드'>스코틀랜드</option>
+                    <option value='스페인'>스페인</option>
+                    <option value='슬로바키아'>슬로바키아</option>
+                    <option value='슬로베니아'>슬로베니아</option>
+                    <option value='시리아'>시리아</option>
+                    <option value='아르메니아'>아르메니아</option>
+                    <option value='아르헨티나'>아르헨티나</option>
+                    <option value='아이슬란드'>아이슬란드</option>
+                    <option value='아일랜드'>아일랜드</option>
+                    <option value='알바니아'>알바니아</option>
+                    <option value='알제리'>알제리</option>
+                    <option value='앙골라'>앙골라</option>
+                    <option value='에콰도르'>에콰도르</option>
+                    <option value='오스트리아'>오스트리아</option>
+                    <option value='우루과이'>우루과이</option>
+                    <option value='우즈베키스탄'>우즈베키스탄</option>
+                    <option value='우크라이나'>우크라이나</option>
+                    <option value='웨일스'>웨일스</option>
+                    <option value='이란'>이란</option>
+                    <option value='이스라엘'>이스라엘</option>
+                    <option value='이집트'>이집트</option>
+                    <option value='이탈리아'>이탈리아</option>
+                    <option value='일본'>일본</option>
+                    <option value='잉글랜드'>잉글랜드</option>
+                    <option value='자메이카'>자메이카</option>
+                    <option value='적도 기니'>적도 기니</option>
+                    <option value='조지아'>조지아</option>
+                    <option value='중앙 아프리카 공화국'>중앙 아프리카 공화국</option>
+                    <option value='짐바브웨'>짐바브웨</option>
+                    <option value='체코'>체코</option>
+                    <option value='칠레'>칠레</option>
+                    <option value='카메룬'>카메룬</option>
+                    <option value='카보 베르데'>카보 베르데</option>
+                    <option value='카타르'>카타르</option>
+                    <option value='캐나다'>캐나다</option>
+                    <option value='케냐'>케냐</option>
+                    <option value='코소보'>코소보</option>
+                    <option value='코스타리카'>코스타리카</option>
+                    <option value='코트디부아르'>코트디부아르</option>
+                    <option value='콜롬비아'>콜롬비아</option>
+                    <option value='콩고 민주 공화국'>콩고 민주 공화국</option>
+                    <option value='크로아티아'>크로아티아</option>
+                    <option value='토고'>토고</option>
+                    <option value='튀니지'>튀니지</option>
+                    <option value='튀르키예'>튀르키예</option>
+                    <option value='트리니다드 토바고'>트리니다드 토바고</option>
+                    <option value='파라과이'>파라과이</option>
+                    <option value='페루'>페루</option>
+                    <option value='포르투갈'>포르투갈</option>
+                    <option value='폴란드'>폴란드</option>
+                    <option value='프랑스'>프랑스</option>
+                    <option value='핀란드'>핀란드</option>
+                    <option value='헝가리'>헝가리</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="postionSearch">포지션</label>
+                <select id="postionSearch">
+                    <option value="">전체</option>
+                    <option value="D">D</option>
+                    <option value="WB">WB</option>
+                    <option value="DM">DM</option>
+                    <option value="M">M</option>
+                    <option value="AM">AM</option>
+                    <option value="S">S</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 검색 결과 테이블 -->
+        <table id="playersTable">
+            <thead>
+                <tr>
+                    <th>선수 이름</th>
+                    <th>한글 이름</th>
+                    <th>국적</th>
+                    <th>포지션</th>
+                    <th>어빌</th>
+                    <th>포텐</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 동적으로 결과가 삽입됩니다 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 데이터
+        let data = []; // JSON 데이터를 저장할 변수
+
+        $(document).ready(function() {
+            // input 및 select 변경 시 필터 적용
+            $("input").on("keyup", applyFilters);
+            $("select").on("change", applyFilters);
+        });
+
+        // JSON 파일 URL 배열 (Google Drive 파일은 직접 fetch 불가능)
+        const jsonUrls = [
+            "https://synthess.github.io/EXFM/json/250318_player.json"
+        ];
+
+        // JSON 파일 불러오기
+        async function loadJsonFiles(urls) {
+            try {
+                const responses = await Promise.all(urls.map(url => fetch(url)));
+                const jsonData = await Promise.all(responses.map(res => res.json()));
+
+                data = jsonData[0]; // 첫 번째 JSON 데이터를 data 변수에 저장
+                
+                // 초기 데이터 표시
+                displayData(data);
+            } catch (error) {
+                console.error("JSON 파일을 불러오는 중 오류 발생:", error);
+            }
+        }
+
+        // JSON 파일 로드 실행
+        loadJsonFiles(jsonUrls);
+
+        function applyFilters() {
+            var nameSearch = $("#nameSearch").val().trim(); // 이름 검색
+            var abilityMin = $("#abilityMin").val(); // 최소 어빌
+            var abilityMax = $("#abilityMax").val(); // 최대 어빌
+            var potentialMin = $("#potentialMin").val(); // 최소 포텐
+            var potentialMax = $("#potentialMax").val(); // 최대 포텐
+            var nationality = $("#nationalitySearch").val(); // 선택된 국적
+            var position = $("#postionSearch").val(); // 선택된 포지션
+
+            // 필터링된 데이터
+            var filteredData = data.filter(player => {
+
+                // 이름 검색 필터링 (한글 및 영문 포함)
+                if (nameSearch && !player.name.includes(nameSearch) && !player.koreanName.includes(nameSearch)) return false;
+
+                // 어빌 필터링
+                if (abilityMin && player.ability < abilityMin) return false;
+                if (abilityMax && player.ability > abilityMax) return false;
+
+                // 포텐 필터링
+                if (potentialMin && player.potential < potentialMin) return false;
+                if (potentialMax && player.potential > potentialMax) return false;
+
+                // 국적 필터링
+                if (nationality && player.nationality !== nationality) return false;
+
+                // 포지션 필터링
+                if (position && !player.position.includes(position)) return false;
+
+                return true;
+            });
+
+            // 필터링된 데이터 표시
+            displayData(filteredData);
+        }
+
+        // 데이터 출력 함수
+        function displayData(players) {
+            const tableBody = document.querySelector("#playersTable tbody");
+            tableBody.innerHTML = ""; // 기존 내용 지우기
+
+            players.forEach(player => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${player.name}</td>
+                    <td>${player.koreanName}</td>
+                    <td>${player.nationality}</td>
+                    <td>${player.position}</td>
+                    <td>${player.ability}</td>
+                    <td>${player.potential}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+</html>
