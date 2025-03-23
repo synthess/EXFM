@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
         }
-
+    
         .container {
             width: 80%;
             margin: 0 auto;
@@ -22,42 +22,90 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
+    
         header {
             text-align: center;
             margin-bottom: 20px;
         }
-
+    
         header h1 {
             color: #333;
         }
-
+    
         .filters {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 20px;
         }
-
+    
         .filters div {
             display: flex;
             flex-direction: column;
             justify-content: center;
             width: 200px;
         }
-
+    
         .filters label {
             font-size: 14px;
             margin-bottom: 5px;
         }
-
+    
         .filters input, .filters select {
             padding: 10px;
             font-size: 14px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
+    
+        /* 토글 버튼 스타일 */
+        .filters input[type="checkbox"] {
+            display: none; /* 체크박스를 숨김 */
+        }
+    
+        .filters label.toggle-label {
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .filters label.toggle-label .toggle-switch {
+            width: 68px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+    
+        .filters label.toggle-label .toggle-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+    
+        /* 체크된 상태일 때 */
+        .filters input[type="checkbox"]:checked + .toggle-label .toggle-switch {
+            background-color: #007bff;
+        }
+    
+        .filters input[type="checkbox"]:checked + .toggle-label .toggle-switch::before {
+            left: 51px; /* 오른쪽으로 이동 */
+        }
+    
         .filters button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -67,46 +115,66 @@
             cursor: pointer;
             flex-grow: 1;
         }
-
+    
         .filters button:hover {
             background-color: #0056b3;
         }
-
+    
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-
+    
         table th, table td {
             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
         }
-
+    
         table th {
             background-color: #007bff;
             color: white;
         }
-
+    
         table tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-
+    
         table tr:hover {
             background-color: #f1f1f1;
         }
 
+        .w100{
+            width:100px;
+        }
+
+        .w120{
+            width:120px;
+        }
+
+        .w140{
+            width:140px;
+        }
+
+        .w160{
+            width:160px;
+        }
+
+        .w200{
+            width:200px;
+        }
+    
         @media (max-width: 768px) {
             .filters {
                 flex-direction: column;
                 gap: 10px;
             }
-
+    
             .filters div {
                 width: 100%;
             }
-
+    
             .filters button {
                 width: 100%;
             }
@@ -231,19 +299,27 @@
                     <option value='4-2-2-2 DM AM 좁게'>4-2-2-2 DM AM 좁게</option>
                 </select>
             </div>
+
+            <div>
+                <label>FA 감독만 보기</label>
+                <input type="checkbox" id="faCoachOnly">
+                <label class="toggle-label" for="faCoachOnly">
+                    <div class="toggle-switch"></div>
+                </label>
+            </div>
         </div>
 
         <table id="coachesTable">
             <thead>
                 <tr>
-                    <th>감독명</th>
-                    <th>국적</th>
-                    <th>어빌</th>
-                    <th>포텐</th>
-                    <th>전술 스타일</th>
-                    <th>포메이션1</th>
-                    <th>포메이션2</th>
-                    <th>소속구단</th>
+                    <th class="">감독명</th>
+                    <th class="w140">국적</th>
+                    <th class="">어빌</th>
+                    <th class="">포텐</th>
+                    <th class="w140">전술 스타일</th>
+                    <th class="w200">포메이션1</th>
+                    <th class="w200">포메이션2</th>
+                    <th class="w120">소속구단</th>
                 </tr>
             </thead>
             <tbody>
@@ -259,7 +335,7 @@
 
     $(document).ready(function() {
         // input 및 select 변경 시 필터 적용
-        $("input").on("keyup", applyFilters);
+        $("input").on("keyup change", applyFilters);
         $("select").on("change", applyFilters);
     });
 
@@ -317,6 +393,7 @@
         let tactic = $("#tacticStyle").val();
         let formation1 = $("#preferredFormation").val();
         let formation2 = $("#preferredFormation").val();
+        let faCoachOnly = $("input[id=faCoachOnly]:checked").val();
 
         var filteredData = data.filter(coach => {
 
@@ -339,6 +416,14 @@
 
             // 포메이션 필터링
             if (formation1 && formation2 && !coach.formation1.includes(formation1) && !coach.formation2.includes(formation2)) return false;
+
+            // FA감독만
+            if (faCoachOnly) {
+                console.log(faCoachOnly)
+                if(coach.team !== 'FA') return false;
+            } else {
+                return true;
+            }
 
             return true;
             });
