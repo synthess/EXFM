@@ -76,6 +76,68 @@
             background-color: #0056b3;
         }
 
+        /* 토글 버튼 스타일 */
+        .filters input[type="checkbox"] {
+            display: none; /* 체크박스를 숨김 */
+        }
+    
+        .filters label.toggle-label {
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .filters label.toggle-label .toggle-switch {
+            width: 68px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+    
+        .filters label.toggle-label .toggle-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+    
+        /* 체크된 상태일 때 */
+        .filters input[type="checkbox"]:checked + .toggle-label .toggle-switch {
+            background-color: #007bff;
+        }
+    
+        .filters input[type="checkbox"]:checked + .toggle-label .toggle-switch::before {
+            left: 51px; /* 오른쪽으로 이동 */
+        }
+    
+        .filters button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+    
+        .filters button:hover {
+            background-color: #0056b3;
+        }
+
         /* 테이블 스타일 */
         table {
             width: 100%;
@@ -100,6 +162,26 @@
 
         table tr:hover {
             background-color: #f1f1f1;
+        }
+
+        .w100{
+            width:100px;
+        }
+
+        .w120{
+            width:120px;
+        }
+
+        .w140{
+            width:140px;
+        }
+
+        .w160{
+            width:160px;
+        }
+
+        .w200{
+            width:200px;
         }
 
         /* 반응형 디자인 */
@@ -266,18 +348,27 @@
                     <option value="S">S</option>
                 </select>
             </div>
+
+            <div>
+                <label>FA 선수만 보기</label>
+                <input type="checkbox" id="faPlayerOnly">
+                <label class="toggle-label" for="faPlayerOnly">
+                    <div class="toggle-switch"></div>
+                </label>
+            </div>
         </div>
 
         <!-- 검색 결과 테이블 -->
         <table id="playersTable">
             <thead>
                 <tr>
-                    <th>선수 이름</th>
-                    <th>한글 이름</th>
-                    <th>국적</th>
-                    <th>포지션</th>
-                    <th>어빌</th>
-                    <th>포텐</th>
+                    <th class="">선수 이름</th>
+                    <th class="">한글 이름</th>
+                    <th class="w140">국적</th>
+                    <th class="w200">포지션</th>
+                    <th class="w100">어빌</th>
+                    <th class="w100">포텐</th>
+                    <th class="w120">소속구단</th>
                 </tr>
             </thead>
             <tbody>
@@ -292,7 +383,7 @@
 
         $(document).ready(function() {
             // input 및 select 변경 시 필터 적용
-            $("input").on("keyup", applyFilters);
+            $("input").on("keyup change", applyFilters);
             $("select").on("change", applyFilters);
         });
 
@@ -325,8 +416,9 @@
             var abilityMax = $("#abilityMax").val(); // 최대 어빌
             var potentialMin = $("#potentialMin").val(); // 최소 포텐
             var potentialMax = $("#potentialMax").val(); // 최대 포텐
-            var nationality = $("#nationalitySearch").val(); // 선택된 국적
+            var national = $("#nationalitySearch").val(); // 선택된 국적
             var position = $("#postionSearch").val(); // 선택된 포지션
+            let faPlayerOnly = $("input[id=faPlayerOnly]:checked").val();
 
             // 필터링된 데이터
             var filteredData = data.filter(player => {
@@ -343,10 +435,15 @@
                 if (potentialMax && player.potential > potentialMax) return false;
 
                 // 국적 필터링
-                if (nationality && player.nationality !== nationality) return false;
+                if (national && player.national !== national) return false;
 
                 // 포지션 필터링
                 if (position && !player.position.includes(position)) return false;
+
+                // FA감독만
+                if (faPlayerOnly) {
+                    if(player.team !== 'FA') return false;
+                }
 
                 return true;
             });
@@ -365,10 +462,11 @@
                 row.innerHTML = `
                     <td>${player.name}</td>
                     <td>${player.koreanName}</td>
-                    <td>${player.nationality}</td>
+                    <td>${player.national}</td>
                     <td>${player.position}</td>
                     <td>${player.ability}</td>
                     <td>${player.potential}</td>
+                    <td>${player.team}</td>
                 `;
                 tableBody.appendChild(row);
             });
