@@ -380,10 +380,12 @@
                 `;
             tableBody.appendChild(row);
         });
+
     }
 
     // 데이터 필터링
     function applyFilters() {
+
         let nameSearch = $("#coachNameSearch").val().toLowerCase();
         let nationality = $("#nationalitySearch").val().toLowerCase();
         let abilityMin = parseInt($("#abilityMin").val()) || 0;
@@ -419,7 +421,6 @@
 
             // FA감독만
             if (faCoachOnly) {
-                console.log(faCoachOnly)
                 if(coach.team !== 'FA') return false;
             } else {
                 return true;
