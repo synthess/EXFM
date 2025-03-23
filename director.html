@@ -243,6 +243,7 @@
                     <th>전술 스타일</th>
                     <th>포메이션1</th>
                     <th>포메이션2</th>
+                    <th>소속구단</th>
                 </tr>
             </thead>
             <tbody>
@@ -299,6 +300,7 @@
                         <td>${coach.style == 'None' ? '' : coach.style}</td>
                         <td>${coach.formation1}</td>
                         <td>${coach.formation2}</td>
+                        <td>${coach.team}</td>
                 `;
             tableBody.appendChild(row);
         });
