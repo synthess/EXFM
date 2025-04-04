@@ -1,4 +1,4 @@
-const url = {
+const imageUrl = {
   "리버풀" : "https://www.chuggu.net//files/attach/images/3401/313/262/125/6628de73312fee8d848e35acb687efb5.png",
   "레알마드리드" : "https://www.chuggu.net//files/attach/images/3401/313/262/125/a15f856f5a030bb16d574f3ed00fada5.png",
   "맨유" : "https://www.chuggu.net//files/attach/images/3401/313/262/125/f442340c111a5bdfa1e02d5da157d41d.png",
