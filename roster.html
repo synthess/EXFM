@@ -50,7 +50,7 @@
         // 이미지 URL을 가져와서 해당 팀 이미지를 표시
         if(!imageUrl) {
             alert("이미지 url 목록 불러오기 실패!");
-            return false;
+            widnow.close();
         }
         if (imageUrl && imageUrl[team1] && imageUrl[team2]) {
             const imageContainer = document.getElementById('imageContainer');
