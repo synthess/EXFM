@@ -198,6 +198,10 @@
             .filters button {
                 width: 100%;
             }
+
+            table th.hide td.hide {
+            width:0px;
+            }
         }
     </style>
 </head>
@@ -363,9 +367,9 @@
         <table id="playersTable">
             <thead>
                 <tr>
-                    <th class="">선수 이름</th>
+                    <th class="hide">선수 이름</th>
                     <th class="">한글 이름</th>
-                    <th class="w140">국적</th>
+                    <th class="w140 hide">국적</th>
                     <th class="w200">포지션</th>
                     <th class="w100">어빌</th>
                     <th class="w100">포텐</th>
@@ -461,9 +465,9 @@
             players.forEach(player => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td>${player.name}</td>
+                    <td class="hide">${player.name}</td>
                     <td>${player.koreanName}</td>
-                    <td>${player.national}</td>
+                    <td class="hide">${player.national}</td>
                     <td>${player.position}</td>
                     <td>${player.ability}</td>
                     <td>${player.potential}</td>
