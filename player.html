@@ -373,9 +373,9 @@
             <thead>
                 <tr>
                     <th class="hide">선수 이름</th>
-                    <th class="">한글 이름</th>
+                    <th class="w200">한글 이름</th>
                     <th class="w140 hide">국적</th>
-                    <th class="w200">포지션</th>
+                    <th class="">포지션</th>
                     <th class="w100">어빌</th>
                     <th class="w100">포텐</th>
                     <th class="w120">소속구단</th>
@@ -471,9 +471,9 @@
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td class="hide">${player.name}</td>
-                    <td>${player.koreanName}</td>
+                    <td class="w200">${player.koreanName}</td>
                     <td class="hide">${player.national}</td>
-                    <td class="w200">${player.position}</td>
+                    <td>${player.position}</td>
                     <td>${player.ability}</td>
                     <td>${player.potential}</td>
                     <td>${player.team}</td>
