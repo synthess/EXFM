@@ -380,6 +380,63 @@ width:200px;
                     <div class="toggle-switch"></div>
                 </label>
             </div>
+
+            <div style="flex-flow:inherit; width:400px;">
+                <select id="selectTeam1">
+                    <option value="AT마드리드">AT마드리드</option>
+                    <option value="도르트문트">도르트문트</option>
+                    <option value="라이프치히">라이프치히</option>
+                    <option value="레버쿠젠">레버쿠젠</option>
+                    <option value="레스터시티">레스터시티</option>
+                    <option value="레알마드리드">레알마드리드</option>
+                    <option value="로마">로마</option>
+                    <option value="리버풀">리버풀</option>
+                    <option value="마르세유">마르세유</option>
+                    <option value="맨시티">맨시티</option>
+                    <option value="맨유">맨유</option>
+                    <option value="밀란">밀란</option>
+                    <option value="바르셀로나">바르셀로나</option>
+                    <option value="바이에른뮌헨">바이에른뮌헨</option>
+                    <option value="비야레알">비야레알</option>
+                    <option value="생테티엔">생테티엔</option>
+                    <option value="아스탈">아스탈</option>
+                    <option value="아탈란타">아탈란타</option>
+                    <option value="울버햄튼">울버햄튼</option>
+                    <option value="유벤투스">유벤투스</option>
+                    <option value="인테르">인테르</option>
+                    <option value="장크트파울리">장크트파울리</option>
+                    <option value="첼시">첼시</option>
+                    <option value="파리생제르망">파리생제르망</option>
+                </select>
+                <select id="selectTeam2">
+                    <option value="AT마드리드">AT마드리드</option>
+                    <option value="도르트문트">도르트문트</option>
+                    <option value="라이프치히">라이프치히</option>
+                    <option value="레버쿠젠">레버쿠젠</option>
+                    <option value="레스터시티">레스터시티</option>
+                    <option value="레알마드리드">레알마드리드</option>
+                    <option value="로마">로마</option>
+                    <option value="리버풀">리버풀</option>
+                    <option value="마르세유">마르세유</option>
+                    <option value="맨시티">맨시티</option>
+                    <option value="맨유">맨유</option>
+                    <option value="밀란">밀란</option>
+                    <option value="바르셀로나">바르셀로나</option>
+                    <option value="바이에른뮌헨">바이에른뮌헨</option>
+                    <option value="비야레알">비야레알</option>
+                    <option value="생테티엔">생테티엔</option>
+                    <option value="아스탈">아스탈</option>
+                    <option value="아탈란타">아탈란타</option>
+                    <option value="울버햄튼">울버햄튼</option>
+                    <option value="유벤투스">유벤투스</option>
+                    <option value="인테르">인테르</option>
+                    <option value="장크트파울리">장크트파울리</option>
+                    <option value="첼시">첼시</option>
+                    <option value="파리생제르망">파리생제르망</option>
+                </select>
+
+                <button id="viewRoster">로스터 비교 보기</button>
+            </div>
         </div>
 
         <!-- 검색 결과 테이블 -->
@@ -409,6 +466,7 @@ width:200px;
             // input 및 select 변경 시 필터 적용
             $("input").on("keyup change", applyFilters);
             $("select").on("change", applyFilters);
+            $("#viewRoster").on("click", viewRosterPop);
         });
 
         // JSON 파일 URL 배열 (Google Drive 파일은 직접 fetch 불가능)
@@ -494,6 +552,16 @@ width:200px;
                 `;
                 tableBody.appendChild(row);
             });
+        }
+
+        function viewRosterPop() {
+            var selectTeam1 = $("#selectTeam1").val();
+            var selectTeam2 = $("#selectTeam2").val();
+
+            var url = "http://synthess.github.io/EXFM/roster.html?team1=" + selectTeam1 + "&team2=" + selectTeam2;
+
+            // 새 창 열기
+            window.open(url, "_blank", "width=1256, height=571");  // 원하는 창 크기를 설정
         }
     </script>
 
