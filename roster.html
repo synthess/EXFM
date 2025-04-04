@@ -57,17 +57,15 @@
 
             // 팀1 이미지
             const img1 = document.createElement('img');
+            img1.crossOrigin = "anonymous";  // crossorigin 속성은 소문자로 `crossOrigin`이 맞습니다.
             img1.src = imageUrl[team1];
             img1.alt = team1;
-            img1.crossorigin = "anonymous";
 
             // 팀2 이미지
             const img2 = document.createElement('img');
+            img2.crossOrigin = "anonymous";  // crossorigin 속성
             img2.src = imageUrl[team2];
             img2.alt = team2;
-            img2.crossorigin = "anonymous";
-
-            console.log(img1);
 
             // 이미지를 컨테이너에 추가
             imageContainer.appendChild(img1);
