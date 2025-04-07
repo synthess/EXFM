@@ -19,10 +19,10 @@ const imageUrl = {
   "바이에른뮌헨" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/BayernMunich.png",
   "맨시티" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/ManchesterCity.png",
   "아스날" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/Arsenal.png",
-  "울버햄튼" : "",
-  "레스터시티" : "",
-  "생테티엔" : "",
-  "장크트파울리" : ""
+  "울버햄튼" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/Wolverhampton.png",
+  "레스터시티" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/Leicester.png",
+  "생테티엔" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/SaintEtienne.png",
+  "장크트파울리" : "https://raw.githubusercontent.com/synthess/EXFM/main/images/Pauli.png",
 }
 
 
