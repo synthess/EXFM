@@ -19,11 +19,20 @@
             display: flex;
             width: 100%;
             height: 100%;
+            flex-wrap: wrap; /* 화면 크기에 맞게 이미지가 한 줄에 넘칠 경우 아래로 내려가게 함 */
         }
         .image-container img {
             width: 50%;
             height: 100%;
             object-fit: cover; /* 이미지가 영역에 맞게 크기 조정 */
+        }
+
+        /* 모바일 화면에서는 세로로 이미지 배치 */
+        @media (max-width: 768px) {
+            .image-container img {
+                width: 100%;
+                height: 50%; /* 모바일에서는 세로로 배치되므로 높이를 50%로 설정 */
+            }
         }
     </style>
 </head>
@@ -50,7 +59,7 @@
         // 이미지 URL을 가져와서 해당 팀 이미지를 표시
         if(!imageUrl) {
             alert("이미지 url 목록 불러오기 실패!");
-            widnow.close();
+            window.close();
         }
         if (imageUrl && imageUrl[team1] && imageUrl[team2]) {
             const imageContainer = document.getElementById('imageContainer');
