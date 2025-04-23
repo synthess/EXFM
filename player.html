@@ -543,9 +543,9 @@ width:200px;
             players.forEach(player => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td class="hide">${player.name}</td>
-                    <td class="w200">${player.koreanName}</td>
-                    <td class="">${player.age}</td>
+                    <td class="w200 hide">${player.name}</td>
+                    <td class="">${player.koreanName}</td>
+                    <td class="w80">${player.age}</td>
                     <td class="hide">${player.national}</td>
                     <td class="position_width">${player.position}</td>
                     <td>${player.ability}</td>
